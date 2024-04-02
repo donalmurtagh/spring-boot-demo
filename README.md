@@ -1,3 +1,3 @@
 # spring-boot-demo
 
-A "blank" Spring Boot app for reproducing bugs, etc. 
+Demonstrate [this filter error handling issue](https://github.com/wimdeblauwe/error-handling-spring-boot-starter/issues/87)
