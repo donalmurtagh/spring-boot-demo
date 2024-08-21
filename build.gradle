@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.4'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id "net.ltgt.errorprone" version "4.0.1"
 }
 
 group = 'com.example'
@@ -16,10 +17,22 @@ repositories {
 }
 
 dependencies {
+	implementation "org.jspecify:jspecify:1.0.0"
+	errorprone "com.uber.nullaway:nullaway:0.11.2"
+	errorprone "com.google.errorprone:error_prone_core:2.30.0"
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.named('compileJava') {
+	options.errorprone {
+		// NullAway configuration options: https://github.com/uber/NullAway/wiki/Configuration
+		option("NullAway:AnnotatedPackages", "com.example.demo")
+	}
+	options.compilerArgs << "-Werror"
 }

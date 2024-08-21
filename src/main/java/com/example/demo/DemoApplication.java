@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DemoApplication {
 
 	public static void main(String[] args) {
+		new MissingNullableAnnotations(null);
 		SpringApplication.run(DemoApplication.class, args);
 	}
-
 }
