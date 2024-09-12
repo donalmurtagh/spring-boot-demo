@@ -12,7 +12,7 @@ import org.springframework.web.client.RestClient;
 
 @Lazy
 @TestConfiguration
-public class RestClientBean {
+class RandomPortRestClient {
 
     @Bean
     RestClient restClient(@LocalServerPort int port, @Autowired RestClient.Builder restClientBuilder) {

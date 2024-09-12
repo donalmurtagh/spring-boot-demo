@@ -8,8 +8,8 @@ import org.springframework.web.client.RestClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = RestClientBean.class)
-class RandomPortEnvTests {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = RandomPortRestClient.class)
+class RandomPortTests {
 
 	@Autowired
 	private RestClient restClient;
@@ -24,3 +24,4 @@ class RandomPortEnvTests {
 		assertEquals(HttpStatus.OK, status);
 	}
 }
+

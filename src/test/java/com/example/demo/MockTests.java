@@ -8,8 +8,8 @@ import org.springframework.web.client.RestClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest(classes = RestClientBean.class)
-class MockEnvTests {
+@SpringBootTest(classes = MockRestClient.class)
+class MockTests {
 
 	@Autowired
 	private RestClient restClient;
@@ -24,3 +24,4 @@ class MockEnvTests {
 		assertEquals(HttpStatus.OK, status);
 	}
 }
+
