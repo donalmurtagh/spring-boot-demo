@@ -1,16 +1,18 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import org.springframework.boot.jackson.JsonComponent;
-import org.springframework.boot.jackson.ObjectValueSerializer;
-import tools.jackson.core.JsonGenerator;
-import tools.jackson.databind.SerializationContext;
+import org.springframework.boot.jackson.JsonObjectSerializer;
+
+import java.io.IOException;
 
 @JsonComponent
-public class ItemSerializer extends ObjectValueSerializer<Item> {
+public class ItemSerializer extends JsonObjectSerializer<Item> {
 
     @Override
-    protected void serializeObject(Item item, JsonGenerator jsonWriter, SerializationContext context) {
-        jsonWriter.writePOJOProperty("id", item.id())
-            .writeStringProperty("name", item.name());
+    protected void serializeObject(Item item, JsonGenerator jsonWriter, SerializerProvider provider) throws IOException {
+        jsonWriter.writeObjectField("id", item.id());
+        jsonWriter.writeStringField("name", item.name());
     }
 }
