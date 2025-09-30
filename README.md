@@ -1,3 +1,3 @@
 # spring-boot-demo
 
-A branch that demonstrates an error handling bug does **not** occur in Spring Boot v3.5.6
+A branch that demonstrates an error handling bug in Spring Boot v4.0.0-M3

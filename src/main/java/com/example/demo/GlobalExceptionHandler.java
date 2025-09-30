@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BindException.class)
-    public ResponseEntity<Object> handle(BindException exception) {
+    public ResponseEntity<String> handle(BindException exception) {
         Assert.isTrue(exception.getAllErrors().size() == 1, "Only one error should be present");
         var fieldError = exception.getFieldError();
 
