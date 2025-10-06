@@ -30,6 +30,8 @@ class ItemControllerTests {
 
         assertEquals("code", apiErrorResponse.getCode());
         assertEquals("message", apiErrorResponse.getMessage());
+
+        // The following line fails because ApiErrorResponseDeserializer is not invoked to deserialize the response body
         assertEquals(1, apiErrorResponse.getFieldErrors().size());
     }
 
