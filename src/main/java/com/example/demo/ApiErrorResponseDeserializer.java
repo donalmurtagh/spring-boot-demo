@@ -7,22 +7,6 @@ import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ValueDeserializer;
 
-/**
- * This deserializer should do the inverse of ApiErrorResponseSerializer. For example, we cannot assume the
- * status field is present because the serializer doesn't always include it.
- * <p>
- * With v4.6.0 of the starter in Spring Boot v3.x, it's possible to fully deserialize an `ApiErrorResponse` like so:
- * <pre>
- * {@code
- * ApiErrorResponse errorResponse = objectMapper.readValue(jsonString, ApiErrorResponse.class);
- * }
- * </pre>
- * <p>
- * In the absence of this deserializer, in Spring Boot v4 the snippet above only deserializes the root properties of
- * ApiErrorResponse. Nested properties such as globalErrors and fieldErrors are not populated.
- * <p>
- * This starter restores the ability to fully deserialize an ApiErrorResponse in Spring Boot v4 via the snippet above.
- */
 @JsonComponent
 public class ApiErrorResponseDeserializer extends ValueDeserializer<ApiErrorResponse> {
 
