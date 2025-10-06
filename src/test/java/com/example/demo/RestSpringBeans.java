@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
 import org.springframework.test.web.servlet.client.RestTestClient;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * This class defines Spring beans that are useful for testing the application via it's REST API i.e. by making
@@ -20,9 +22,12 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 public class RestSpringBeans {
 
     @Bean
-    RestTestClient restTestClient(@LocalServerPort int port) {
+    RestTestClient restTestClient(@LocalServerPort int port, JacksonJsonHttpMessageConverter jsonMessageConverter) {
         return RestTestClient.bindToServer().baseUrl("http://localhost:" + port)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .configureMessageConverters(clientBuilder -> {
+                clientBuilder.jsonMessageConverter(jsonMessageConverter);
+            })
             .build();
     }
 }
