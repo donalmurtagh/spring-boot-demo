@@ -1,13 +1,12 @@
 package com.example.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.web.server.test.LocalServerPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.client.RestClient;
+import org.springframework.test.web.servlet.client.RestTestClient;
 
 /**
  * This class defines Spring beans that are useful for testing the application via it's REST API i.e. by making
@@ -21,8 +20,8 @@ import org.springframework.web.client.RestClient;
 public class RestSpringBeans {
 
     @Bean
-    RestClient restClient(@LocalServerPort int port, @Autowired RestClient.Builder restClientBuilder) {
-        return restClientBuilder.baseUrl("http://localhost:" + port)
+    RestTestClient restTestClient(@LocalServerPort int port) {
+        return RestTestClient.bindToServer().baseUrl("http://localhost:" + port)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build();
     }

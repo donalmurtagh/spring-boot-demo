@@ -1,0 +1,31 @@
+package com.example.demo;
+
+public class ApiFieldError {
+    private final String code;
+    private final String property;
+    private final String message;
+    private final String path;
+
+    public ApiFieldError(String code, String property, String message, String path) {
+        this.code = code;
+        this.property = property;
+        this.message = message;
+        this.path = path;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getProperty() {
+        return property;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getPath() {
+        return path;
+    }
+}

@@ -1,8 +1,6 @@
 package com.example.demo;
 
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,6 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ItemController {
 
     @PutMapping
-    public void updateItem(@Valid @RequestBody UpdateRequest updateRequest) {
+    public ApiErrorResponse updateItem() {
+        var apiError = new ApiErrorResponse("code", "message");
+        var fieldError = new ApiFieldError("fieldCode", "fieldProperty", "fieldMessage", "path");
+        apiError.addFieldError(fieldError);
+        return apiError;
     }
 }
