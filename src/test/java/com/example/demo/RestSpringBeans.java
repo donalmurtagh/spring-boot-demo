@@ -1,13 +1,13 @@
 package com.example.demo;
 
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.web.server.test.LocalServerPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
 import org.springframework.test.web.servlet.client.RestTestClient;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * This class defines Spring beans that are useful for testing the application via it's REST API i.e. by making
@@ -21,12 +21,12 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 public class RestSpringBeans {
 
     @Bean
-    RestTestClient restTestClient(@LocalServerPort int port, JacksonJsonHttpMessageConverter jsonMessageConverter) {
-        return RestTestClient.bindToServer().baseUrl("http://localhost:" + port)
+    RestTestClient restTestClient(WebApplicationContext context, JacksonJsonHttpMessageConverter jsonMessageConverter) {
+        return RestTestClient.bindToApplicationContext(context)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-            .configureMessageConverters(clientBuilder -> {
-                clientBuilder.registerDefaults().jsonMessageConverter(jsonMessageConverter);
-            })
+            .configureMessageConverters(clientBuilder ->
+                clientBuilder.registerDefaults().jsonMessageConverter(jsonMessageConverter)
+            )
             .build();
     }
 }

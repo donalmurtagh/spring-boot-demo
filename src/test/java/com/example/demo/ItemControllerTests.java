@@ -2,51 +2,38 @@ package com.example.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.client.RestTestClient;
-import tools.jackson.databind.ObjectMapper;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-
-@SpringBootTest(webEnvironment = RANDOM_PORT, classes = RestSpringBeans.class)
+@WebMvcTest(ItemController.class)
+@Import(RestSpringBeans.class)
 class ItemControllerTests {
+
+    @Autowired
+    private MockMvcTester mockMvcTester;
 
     @Autowired
     private RestTestClient restTestClient;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
+    /**
+     * This test passes because the unauthenticated client is (correctly) not allowed to access the endpoint.
+     */
     @Test
-    void parseResponseAsApiErrorResponse() {
-        ApiErrorResponse apiErrorResponse = restTestClient.put()
-            .uri("/api/item")
-            .exchange()
-            .expectStatus().is2xxSuccessful()
-            .expectBody(ApiErrorResponse.class)
-            .returnResult()
-            .getResponseBody();
-
-        assertEquals("code", apiErrorResponse.getCode());
-        assertEquals("message", apiErrorResponse.getMessage());
-        assertEquals(1, apiErrorResponse.getFieldErrors().size());
+    void getWithMockMvc() {
+        mockMvcTester.get().uri("/api/item")
+            .assertThat().hasStatus(HttpStatus.UNAUTHORIZED);
     }
 
+    /**
+     * This test fails because the unauthenticated client is (incorrectly) allowed to access the endpoint.
+     */
     @Test
-    void parseResponseAsString() {
-        String responseBody = restTestClient.put()
-            .uri("/api/item")
+    void getWithRestTestClient() {
+        restTestClient.get().uri("/api/item")
             .exchange()
-            .expectStatus().is2xxSuccessful()
-            .expectBody(String.class)
-            .returnResult()
-            .getResponseBody();
-
-        var apiErrorResponse = objectMapper.readValue(responseBody, ApiErrorResponse.class);
-
-        assertEquals("code", apiErrorResponse.getCode());
-        assertEquals("message", apiErrorResponse.getMessage());
-        assertEquals(1, apiErrorResponse.getFieldErrors().size());
+            .expectStatus().isUnauthorized();
     }
 }
