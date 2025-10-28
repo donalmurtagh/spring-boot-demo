@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.client.RestTestClient;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  * This class defines Spring beans that are useful for testing the application via it's REST API i.e. by making
@@ -21,8 +21,8 @@ import org.springframework.web.context.WebApplicationContext;
 public class RestSpringBeans {
 
     @Bean
-    RestTestClient restTestClient(WebApplicationContext context, JacksonJsonHttpMessageConverter jsonMessageConverter) {
-        return RestTestClient.bindToApplicationContext(context)
+    RestTestClient restTestClient(MockMvc mockMvc, JacksonJsonHttpMessageConverter jsonMessageConverter) {
+        return RestTestClient.bindTo(mockMvc)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .configureMessageConverters(clientBuilder ->
                 clientBuilder.registerDefaults().jsonMessageConverter(jsonMessageConverter)
