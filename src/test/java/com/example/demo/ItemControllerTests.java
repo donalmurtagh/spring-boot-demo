@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,8 @@ import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
 @WebMvcTest(ItemController.class)
-@Import({SecurityConfiguration.class, RestSpringBeans.class})
+@AutoConfigureRestTestClient
+@Import(SecurityConfiguration.class)
 @WithMockUser(authorities = "FOO")
 class ItemControllerTests {
 
