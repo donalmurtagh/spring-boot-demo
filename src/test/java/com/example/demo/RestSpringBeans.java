@@ -9,14 +9,6 @@ import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
-/**
- * This class defines Spring beans that are useful for testing the application via it's REST API i.e. by making
- * HTTP calls to the endpoints.
- * <p>
- * This class needs to be @Lazy in order for it to
- * <a href="https://stackoverflow.com/a/70897781/2648">access the server port</a>
- */
-@Lazy
 @TestConfiguration
 public class RestSpringBeans {
 
