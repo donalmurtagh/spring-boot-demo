@@ -1,11 +1,11 @@
 package com.example.demo;
 
-import org.springframework.boot.jackson.JsonComponent;
+import org.springframework.boot.jackson.JacksonComponent;
 import org.springframework.boot.jackson.ObjectValueSerializer;
 import tools.jackson.core.JsonGenerator;
 import tools.jackson.databind.SerializationContext;
 
-@JsonComponent
+@JacksonComponent
 public class ItemSerializer extends ObjectValueSerializer<Item> {
 
     @Override
