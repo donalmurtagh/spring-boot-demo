@@ -21,12 +21,9 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 public class RestSpringBeans {
 
     @Bean
-    RestTestClient restTestClient(MockMvc mockMvc, JacksonJsonHttpMessageConverter jsonMessageConverter) {
+    RestTestClient restTestClient(MockMvc mockMvc) {
         return RestTestClient.bindTo(mockMvc)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-            .configureMessageConverters(clientBuilder ->
-                clientBuilder.registerDefaults().jsonMessageConverter(jsonMessageConverter)
-            )
             .build();
     }
 }
