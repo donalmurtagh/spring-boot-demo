@@ -21,7 +21,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testImplementation 'org.springframework.boot:spring-boot-resttestclient'
-//    testImplementation 'org.springframework.boot:spring-boot-starter-restclient'
+
+	// I tried replacing the resttestclient dependency above with each of those below but it made no difference
+	// testImplementation 'org.springframework.boot:spring-boot-starter-restclient-test'
+	// testImplementation 'org.springframework.boot:spring-boot-starter-restclient'
 }
 
 tasks.named('test') {
