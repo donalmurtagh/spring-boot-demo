@@ -1,0 +1,38 @@
+initscript {
+    repositories {
+        maven {
+            url = "https://artifacts.codegenomeproject.org/maven"
+            credentials {
+                username = System.getenv("CODE_GENOME_USERNAME")
+                password = System.getenv("CODE_GENOME_TOKEN")
+            }
+        }
+    }
+    dependencies { classpath("org.openrewrite:plugin:7.41.0") }
+}
+rootProject {
+    plugins.apply(org.openrewrite.gradle.RewritePlugin)
+    dependencies {
+        rewrite("org.openrewrite.recipe:rewrite-migrate-java:3.46.0")
+    }
+    rewrite {
+        activeRecipe("org.openrewrite.java.migrate.JavaBestPractices")
+        setExportDatatables(true)
+    }
+    afterEvaluate {
+        if (repositories.isEmpty()) {
+            repositories {
+                mavenCentral()
+            }
+        }
+        repositories {
+            maven {
+                url = "https://artifacts.codegenomeproject.org/maven"
+                credentials {
+                    username = System.getenv("CODE_GENOME_USERNAME")
+                    password = System.getenv("CODE_GENOME_TOKEN")
+                }
+            }
+        }
+    }
+}
