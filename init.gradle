@@ -8,7 +8,7 @@ initscript {
             }
         }
     }
-    dependencies { classpath("org.openrewrite:plugin:7.41.0") }
+    dependencies { classpath("org.openrewrite:plugin:7.44.1") }
 }
 rootProject {
     plugins.apply(org.openrewrite.gradle.RewritePlugin)
